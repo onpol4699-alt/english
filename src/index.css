@@ -1,0 +1,911 @@
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700;900&family=Bayon&family=Hanuman:wght@400;700;900&family=Inter:wght@400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Koh+Santepheap:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,400..900;1,400..900&family=Moul&family=Nokora:wght@400;700;900&family=Noto+Sans+Khmer:wght@400;500;600;700;800;900&family=Nunito:ital,wght@0,400..900;1,400..900&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Quicksand:wght@400;500;600;700&family=Siemreap&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 480px;
+}
+
+@layer base {
+  html, body {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: var(--active-english-font), var(--active-khmer-font), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    background-color: #ffffff !important;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+  }
+}
+
+:root {
+  /* Standard International English Typography paired with Khmer */
+  --active-english-font: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --active-khmer-font: 'Battambang', 'Kantumruy Pro', 'Koh Santepheap', 'Noto Sans Khmer', sans-serif;
+}
+
+.font-english, .font-en {
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.font-khmer {
+  font-family: 'Battambang', var(--active-khmer-font), var(--active-english-font), sans-serif;
+  line-height: 1.68;
+  letter-spacing: 0.01em;
+}
+
+/* =========================================================
+   REALISTIC ROTATING FIRE BORDER (conic-gradient) & FLAME FLICKER
+   ========================================================= */
+@keyframes fireRotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 4s linear infinite;
+}
+
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    filter: drop-shadow(0 0 2px #ff4500) drop-shadow(0 0 5px #ff8c00) hue-rotate(0deg);
+    opacity: 0.95;
+  }
+  25% {
+    transform: scale(1.2) rotate(3deg) translateY(-0.5px);
+    filter: drop-shadow(0 0 4px #ffd700) drop-shadow(0 0 8px #ff4500) hue-rotate(12deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.9) rotate(-2deg);
+    filter: drop-shadow(0 0 2px #ff0000) drop-shadow(0 0 4px #ff8c00) hue-rotate(-8deg);
+    opacity: 0.88;
+  }
+  75% {
+    transform: scale(1.22) rotate(2deg) translateY(-0.3px);
+    filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ff4500) hue-rotate(15deg);
+    opacity: 1;
+  }
+}
+
+.developer-fire-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 1.5px;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(255, 69, 0, 0.5), 0 0 12px rgba(255, 140, 0, 0.3);
+  line-height: 1;
+  vertical-align: middle;
+  z-index: 1;
+}
+
+.developer-fire-badge::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 350%;
+  height: 350%;
+  background: conic-gradient(from 0deg, #ff4500, #ff8c00, #ff0000, #ffd700, #ff4500);
+  animation: fireRotate 2s linear infinite;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 0;
+}
+
+.developer-fire-badge-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.flame-flicker-icon {
+  display: inline-block;
+  animation: flameFlicker 0.6s infinite ease-in-out;
+  transform-origin: bottom center;
+}
+
+.developer-badge-glow {
+  animation: borderGlow 1.8s ease-in-out infinite;
+  border: 1px solid rgba(251, 191, 36, 0.9);
+}
+
+/* =========================================================
+   7-COLOR RGB RAINBOW ANIMATED BORDER EFFECT
+   ========================================================= */
+@keyframes rgb-conic-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rgb-rainbow-profile-wrapper {
+  position: relative;
+  border-radius: 20px;
+  padding: 2.5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2), 0 0 14px rgba(0, 43, 251, 0.22), 0 0 8px rgba(0, 255, 213, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rgb-rainbow-conic-spinner {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bfb,
+    #7a00ff,
+    #ff0000
+  );
+  animation: rgb-conic-spin 4s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rgb-rainbow-profile-inner {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 17.5px; /* 20px - 2.5px padding = 17.5px exact nested radius */
+}
+
+.dark .rgb-rainbow-profile-inner {
+  background: #0f172a;
+}
+
+/* =========================================================
+   7-COLOR ANIMATED ROTATING RAINBOW BORDER FOR ACTIVE NAV TAB
+   ========================================================= */
+.nav-rainbow-active-wrapper {
+  position: relative;
+  padding: 1.5px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.35), 0 0 16px rgba(236, 72, 153, 0.25);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-rainbow-active-spinner {
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 400%;
+  height: 400%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bfb,
+    #7a00ff,
+    #ff0000
+  );
+  animation: rgb-conic-spin 3.5s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nav-rainbow-active-inner {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 10.5px; /* 12px - 1.5px padding = 10.5px nested radius */
+  display: inline-flex;
+  align-items: center;
+}
+
+.dark .nav-rainbow-active-inner {
+  background: #0f172a;
+}
+
+/* Clean Static Single Glow for Brand Logo Pill */
+.brand-logo-pill {
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.12);
+}
+.dark .brand-logo-pill {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Brand Logo Container - Outer Rainbow Border & Soft Pulsing Ambient Glow */
+@keyframes aura-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.38);
+  }
+}
+
+.brand-aura-pulse {
+  animation: aura-glow-pulse 3s ease-in-out infinite;
+}
+
+.brand-rainbow-pill-outer {
+  background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+}
+
+.brand-rainbow-pill-inner {
+  background-color: #ffffff !important;
+}
+
+.pi-rainbow-icon-outer {
+  background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
+}
+
+@keyframes rainbow-timer-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow-timer {
+  background: linear-gradient(90deg, #4f46e5, #7c3aed, #ec4899, #f59e0b, #10b981, #06b6d4, #4f46e5);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-timer-shift 4s ease infinite;
+}
+
+/* Floating & Bouncing Keyframes for Study Level Cards */
+@keyframes floating-study-icon {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  35% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  70% {
+    transform: translateY(2px) scale(0.98);
+  }
+}
+
+@keyframes downward-bounce-arrow {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+
+@keyframes glowing-card-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px 2px rgba(99, 102, 241, 0.35);
+  }
+}
+
+.animate-float-study {
+  animation: floating-study-icon 2.4s ease-in-out infinite;
+}
+
+.animate-downward-arrow {
+  animation: downward-bounce-arrow 1.2s ease-in-out infinite;
+}
+
+.animate-glow-study {
+  animation: glowing-card-pulse 2.8s ease-in-out infinite;
+}
+
+/* Compact Install App Subtle Border Shimmer Animation */
+@keyframes install-border-shimmer {
+  0% {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 0 3px rgba(251, 191, 36, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.8), 0 0 8px 3px rgba(251, 191, 36, 0.55);
+    border-color: rgba(254, 243, 199, 0.95);
+  }
+  100% {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 0 3px rgba(251, 191, 36, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.animate-border-shimmer {
+  animation: install-border-shimmer 2.2s ease-in-out infinite;
+}
+
+/* Option 5: Standard Battambang Khmer */
+.font-pair-system, .khmer-font-ptom, .khmer-font-battambang {
+  --active-english-font: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --active-khmer-font: 'Battambang', 'Kantumruy Pro', sans-serif;
+}
+
+/* =========================================================
+   DYNAMIC DUAL-LANGUAGE FONT PAIRS (English + Khmer)
+   ========================================================= */
+
+/* Option 1 (Default Modern): 'Inter' / 'Poppins' + 'Kantumruy Pro' */
+.font-pair-modern, .khmer-font-kantumruy {
+  --active-english-font: 'Plus Jakarta Sans', 'Inter', 'Poppins', sans-serif;
+  --active-khmer-font: 'Kantumruy Pro', 'Koh Santepheap', 'Noto Sans Khmer', sans-serif;
+}
+
+/* Option 2 (Friendly Rounded): 'Nunito' / 'Quicksand' + 'Khmer Rounded' (Siemreap) */
+.font-pair-rounded, .khmer-font-siemreap {
+  --active-english-font: 'Nunito', 'Quicksand', sans-serif;
+  --active-khmer-font: 'Siemreap', 'Kantumruy Pro', sans-serif;
+}
+
+/* Option 3 (Classic Elegant): 'Playfair Display' / 'Merriweather' + 'Moul' */
+.font-pair-elegant, .khmer-font-moul {
+  --active-english-font: 'Playfair Display', 'Merriweather', Georgia, serif;
+  --active-khmer-font: 'Moul', 'Hanuman', cursive;
+}
+
+/* Option 4 (Tech Bold): 'Montserrat' / 'Outfit' + 'Battambang' */
+.font-pair-tech, .khmer-font-battambang {
+  --active-english-font: 'Montserrat', 'Outfit', sans-serif;
+  --active-khmer-font: 'Battambang', 'Kantumruy Pro', sans-serif;
+}
+
+/* Option 5: PTOM Khmer / PLP Standard Font style (រូបគំរូទី ៥ ស្តង់ដារខ្មែរ) */
+.font-pair-system, .khmer-font-ptom {
+  --active-english-font: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --active-khmer-font: 'Kantumruy Pro', 'Koh Santepheap', 'Noto Sans Khmer', 'Khmer OS Siemreap', 'Siemreap', system-ui, sans-serif;
+}
+
+/* Traditional Individual Khmer Fonts for backwards compatibility */
+.khmer-font-hanuman {
+  --active-english-font: 'Merriweather', 'Playfair Display', serif;
+  --active-khmer-font: 'Hanuman', serif;
+}
+.khmer-font-nokora {
+  --active-english-font: 'Outfit', 'Montserrat', sans-serif;
+  --active-khmer-font: 'Nokora', sans-serif;
+}
+.khmer-font-bayon {
+  --active-english-font: 'Montserrat', sans-serif;
+  --active-khmer-font: 'Bayon', cursive;
+}
+
+/* Khmer font size scaling */
+.khmer-size-normal .font-khmer {
+  font-size: 1em;
+}
+.khmer-size-large .font-khmer {
+  font-size: 1.125em;
+  line-height: 1.75;
+}
+.khmer-size-xlarge .font-khmer {
+  font-size: 1.25em;
+  line-height: 1.85;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Background Atmosphere Themes */
+.theme-dark {
+  background-color: #020617;
+  color: #f8fafc;
+}
+.theme-dark .bg-white {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+  color: #f1f5f9;
+}
+.theme-dark .bg-slate-50 {
+  background-color: #1e293b !important;
+  color: #f1f5f9;
+}
+.theme-dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+.theme-dark .text-slate-800 {
+  color: #f1f5f9 !important;
+}
+.theme-dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+.theme-dark .border-slate-200, .theme-dark .border-slate-100 {
+  border-color: #334155 !important;
+}
+
+.theme-modern-blue {
+  background-color: #082f49;
+  color: #f0f9ff;
+}
+.theme-modern-blue .bg-white {
+  background-color: #0c4a6e !important;
+  border-color: #0369a1 !important;
+  color: #f0f9ff;
+}
+.theme-modern-blue .bg-slate-50 {
+  background-color: #075985 !important;
+  color: #f0f9ff;
+}
+.theme-modern-blue .text-slate-900 {
+  color: #ffffff !important;
+}
+.theme-modern-blue .text-slate-800 {
+  color: #e0f2fe !important;
+}
+.theme-modern-blue .text-slate-700 {
+  color: #bae6fd !important;
+}
+.theme-modern-blue .border-slate-200, .theme-modern-blue .border-slate-100 {
+  border-color: #0284c7 !important;
+}
+
+.theme-nature-green {
+  background-color: #052e16;
+  color: #f0fdf4;
+}
+.theme-nature-green .bg-white {
+  background-color: #064e3b !important;
+  border-color: #047857 !important;
+  color: #f0fdf4;
+}
+.theme-nature-green .bg-slate-50 {
+  background-color: #065f46 !important;
+  color: #f0fdf4;
+}
+.theme-nature-green .text-slate-900 {
+  color: #ffffff !important;
+}
+.theme-nature-green .text-slate-800 {
+  color: #dcfce7 !important;
+}
+.theme-nature-green .text-slate-700 {
+  color: #bbf7d0 !important;
+}
+.theme-nature-green .border-slate-200, .theme-nature-green .border-slate-100 {
+  border-color: #059669 !important;
+}
+
+.theme-sunset {
+  background-color: #451a03;
+  color: #fffbeb;
+}
+.theme-sunset .bg-white {
+  background-color: #78350f !important;
+  border-color: #b45309 !important;
+  color: #fffbeb;
+}
+.theme-sunset .bg-slate-50 {
+  background-color: #92400e !important;
+  color: #fffbeb;
+}
+.theme-sunset .text-slate-900 {
+  color: #ffffff !important;
+}
+.theme-sunset .text-slate-800 {
+  color: #fef3c7 !important;
+}
+.theme-sunset .text-slate-700 {
+  color: #fde68a !important;
+}
+.theme-sunset .border-slate-200, .theme-sunset .border-slate-100 {
+  border-color: #d97706 !important;
+}
+
+/* =========================================================
+   ANIMATED GLOWING FIRE BORDER FOR DEVELOPER BADGE
+   (Smooth rotating fire-glow perimeter with animated fire pulse)
+   ========================================================= */
+@keyframes fireBorderSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes fireBadgeGlowPulse {
+  0%, 100% {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 2px rgba(249, 115, 22, 0.5);
+  }
+  50% {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 0 4px rgba(249, 115, 22, 0.7);
+  }
+}
+
+
+
+/* =========================================================
+   ANIMATED 7-COLOR RGB RAINBOW BORDER FOR PROFILE AVATAR
+   (Smooth rotating 7-color RGB rainbow ring with subtle glow)
+   ========================================================= */
+@keyframes avatarRingRotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes avatarRgbGlowAura {
+  0%, 100% {
+    box-shadow: 0 0 3px rgba(255, 0, 0, 0.2), 0 0 5px rgba(0, 43, 251, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 5px rgba(255, 115, 0, 0.25), 0 0 7px rgba(122, 0, 255, 0.2);
+  }
+}
+
+.avatar-glowing-ring {
+  position: relative;
+  border-radius: 9999px;
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: avatarRgbGlowAura 3.5s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.avatar-glowing-ring::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280%;
+  height: 280%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bfb,
+    #7a00ff,
+    #ff0000
+  );
+  animation: avatarRingRotate 4s linear infinite;
+  z-index: 0;
+}
+
+.avatar-glowing-ring-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================================
+   MODERN BLUE ACADEMY & FLOATING/FALLING ICONS
+   ========================================================= */
+.bg-modern-blue-mesh {
+  background-color: #0b1528;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(14, 165, 233, 0.3) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(30, 58, 138, 0.5) 0%, transparent 55%),
+    linear-gradient(135deg, #070e1e 0%, #0b1a38 50%, #081226 100%);
+}
+
+.bg-modern-blue-card {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0369a1 100%);
+}
+
+@keyframes fallAndSway {
+  0% {
+    transform: translate3d(0, -60px, 0) rotate(0deg) scale(0.85);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--falling-opacity, 0.7);
+  }
+  50% {
+    transform: translate3d(24px, 48vh, 0) rotate(16deg) scale(1);
+    opacity: var(--falling-opacity, 0.85);
+  }
+  85% {
+    opacity: var(--falling-opacity, 0.6);
+  }
+  100% {
+    transform: translate3d(-20px, 108vh, 0) rotate(-22deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.animate-falling-icon {
+  animation: fallAndSway var(--falling-duration, 14s) linear infinite;
+  animation-delay: var(--falling-delay, 0s);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* =========================================================
+   SOFT PURPLE CHECKERBOARD PATTERN (លំនាំក្រឡាស្វាយស្រទន់ & ភ្លឺថ្លា)
+   Exclusively for Welcome / Login Portal
+   ========================================================= */
+.bg-soft-purple-checkerboard {
+  background-color: #8b5cf6;
+  background-image: 
+    /* Soft checkerboard squares (ក្រឡាៗ) */
+    repeating-conic-gradient(
+      rgba(255, 255, 255, 0.22) 0% 25%, 
+      rgba(243, 232, 255, 0.07) 0% 50%
+    ),
+    /* Soft glowing radial lights for brightness, beauty & depth */
+    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
+    radial-gradient(circle at 85% 85%, rgba(233, 213, 255, 0.45) 0%, transparent 55%),
+    radial-gradient(circle at 15% 75%, rgba(216, 180, 254, 0.4) 0%, transparent 50%),
+    linear-gradient(135deg, #7c3aed 0%, #8b5cf6 40%, #9333ea 75%, #a855f7 100%);
+  background-size: 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+}
+
+.bg-purple-checkerboard {
+  background-color: #8b5cf6;
+  background-image: 
+    repeating-conic-gradient(
+      rgba(255, 255, 255, 0.22) 0% 25%, 
+      rgba(243, 232, 255, 0.07) 0% 50%
+    ),
+    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
+    linear-gradient(135deg, #7c3aed 0%, #8b5cf6 40%, #a855f7 100%);
+  background-size: 32px 32px, 100% 100%, 100% 100%;
+}
+
+@keyframes gradientX {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradientX 3s ease infinite;
+}
+
+@keyframes shimmerEffect {
+  0% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.12);
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmerEffect 2.5s ease-in-out infinite;
+}
+
+/* =========================================================
+   PRINT STYLES FOR STUDY PLAN & TIMETABLE (A4 SHEET)
+   ========================================================= */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #timetable-grid,
+  #timetable-grid * {
+    visibility: visible;
+  }
+
+  #timetable-grid {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #root, .app-container, main {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* 1. Hide top navbar, headers, tabs, and action buttons */
+  header,
+  nav,
+  .navbar,
+  #main-nav-tabs-desktop,
+  #main-nav-tabs-mobile,
+  #mobile-menu-drawer,
+  .mobile-menu-drawer,
+  .tabs-container,
+  [role="tablist"],
+  button,
+  footer,
+  aside,
+  .print\:hidden,
+  [data-print-hidden="true"],
+  [data-html2canvas-ignore="true"],
+  #toast-save-study-plan,
+  #toast-logout-success,
+  #offline-indicator,
+  #weekly-history-selector,
+  .avatar-glowing-ring {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+  }
+
+  /* 2. Set the timetable grid container to width: 100% and overflow: visible */
+  #timetable-grid,
+  #weekly-study-plan-section,
+  #timetable-grid-container,
+  .timetable-grid-container,
+  #printable-study-plan-sheet,
+  .printable-study-plan-sheet {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  #timetable-grid table,
+  #timetable-grid-container table,
+  .timetable-grid-container table,
+  #printable-study-plan-sheet table,
+  .timetable-grid-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  #timetable-grid tr,
+  #timetable-grid-container tr,
+  .timetable-grid-container tr,
+  #printable-study-plan-sheet tr,
+  .timetable-grid-table tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    overflow: visible !important;
+  }
+
+  #timetable-grid th,
+  #timetable-grid td,
+  #timetable-grid-container th,
+  #timetable-grid-container td,
+  .timetable-grid-container th,
+  .timetable-grid-container td,
+  #printable-study-plan-sheet th,
+  #printable-study-plan-sheet td,
+  .timetable-grid-table th,
+  .timetable-grid-table td {
+    overflow: visible !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  /* Form control & display toggles for clean printing */
+  .timetable-interactive-field {
+    display: none !important;
+  }
+
+  .timetable-static-display {
+    display: block !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+

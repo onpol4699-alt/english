@@ -1,0 +1,11 @@
+{
+  "name": "Remix   Remix end6 end Remix English Khmer Learning App",
+  "description": "Comprehensive English learning web application with Khmer translations, beginner to advanced progression, interactive multiple-choice quizzes, audio pronunciation, and vocabulary builder.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
